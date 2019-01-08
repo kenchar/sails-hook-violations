@@ -1,0 +1,36 @@
+{
+  "name": "sails-hook-violations",
+  "version": "1.0.0",
+  "description": "Custom validation error messages for sails model with i18n support.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenchar/sails-hook-violations.git"
+  },
+  "keywords": [
+    "sails",
+    "violate",
+    "violation",
+    "validation",
+    "custom",
+    "message",
+    "error"
+  ],
+  "author": "kenchar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kenchar/sails-hook-violations/issues"
+  },
+  "homepage": "https://github.com/kenchar/sails-hook-violations#readme",
+  "dependencies": {
+    "parley": "^3.8.0",
+    "waterline": "^0.13.6"
+  },
+  "sails": {
+    "isHook": true,
+    "hookName": "violations"
+  }
+}
