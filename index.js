@@ -7,18 +7,17 @@
 const violate = require('./lib/violate');
 module.exports = sails => {
 
-  return {
+    return {
+        initialize: cb => {
 
-    initialize: cb => {
+            var eventsToWaitFor = ['hook:orm:loaded', 'hook:pubsub:loaded'];
+            sails.after(eventsToWaitFor, () => {
 
-      var eventsToWaitFor = ['hook:orm:loaded', 'hook:pubsub:loaded'];
-      sails.after(eventsToWaitFor,() => {
+                violate();
+                return cb();
 
-        violate();
-        return cb();
-
-      });
+            });
+        }
     }
-  }
 
 };

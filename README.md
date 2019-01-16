@@ -3,7 +3,8 @@ sails-hook-violations
 
 [![Build Status](https://travis-ci.org/lykmapipo/sails-hook-validation.svg?branch=master)](https://travis-ci.org/lykmapipo/sails-hook-validation)
 
-Custom validation error messages for sails v1.0+ model with i18n support.
++ Custom validation error messages for sails v1.0+ model with i18n support.
++ Custom Business error object for response with i18n support.  
 
 ## Installation
 ```sh
@@ -13,6 +14,7 @@ $ npm install --save sails-hook-violations
 ## Usage
 
 ### Use without i18n
+
 Add `violationMessages` static property in your sails model
 ```js
 module.exports = {
@@ -30,11 +32,34 @@ module.exports = {
 };
 ```
 
+Add business error object in config/http.js and use like ```new SessionError()```;
+```js
+module.exports.http = {
+    ...
+    businessErrors: {
+        SessionError: {
+            code: 'E_VALIDATION_SESSION',
+            message: 'You are not permitted to perform this action.'
+        }
+    }
+}
+```
+
 ### Use with i18n
+
+Add `modelId.attribute.rule`.
 ```javascript
-//in config/locale/en.json > modelId.attribute.rule
+//in config/locale/en.json
 {
     'user.sex.isIn': 'The sex\'s value must be male or female!'
+}
+```
+
+Add `businessError.funcName.message`.
+```javascript
+//in config/locale/en.json
+{
+    'businessError.SessionError.message': 'You are not permitted to perform this action.'
 }
 ```
 
