@@ -8,6 +8,7 @@
 
 const rules = {
     required: /Missing value for required attribute \`(.+?)\`/ig,
+    required: /\"(.+?)\" is required, but it was not defined./ig,
     isBoolean: /Value \((.+?)\) was not a boolean./ig,
     isNotEmptyString: /Value \((.+?)\) was an empty string./ig,
     isInteger: /Value \((.+?)\) was not an integer./ig,

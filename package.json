@@ -27,7 +27,8 @@
   "homepage": "https://github.com/kenchar/sails-hook-violations#readme",
   "dependencies": {
     "parley": "^3.8.0",
-    "waterline": "^0.13.6"
+    "waterline": "^0.13.6",
+    "machine": "^15.2.2"
   },
   "sails": {
     "isHook": true,
