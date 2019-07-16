@@ -32,6 +32,24 @@ module.exports = {
 };
 ```
 
+Add `violationMessages` static property in your sails action
+```js
+module.exports = {
+    friendlyName: 'Update',
+    inputs: {
+        sex: {
+            type: 'string',
+            isIn: ['male','female']
+        }
+    },
+    violationMessages : {
+        sex: {
+            isIn: 'The sex\'s value must be male or female!'
+        }
+    }
+};
+```
+
 Add business error object in config/http.js and use like ```new SessionError()```;
 ```js
 module.exports.http = {
@@ -52,6 +70,14 @@ Add `modelId.attribute.rule`.
 //in config/locale/en.json
 {
     'user.sex.isIn': 'The sex\'s value must be male or female!'
+}
+```
+
+Add `actionId.attribute.rule`.
+```javascript
+//in config/locale/en.json
+{
+    'user/create.js.sex.isIn': 'The sex\'s value must be male or female!'
 }
 ```
 
