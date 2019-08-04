@@ -7,8 +7,7 @@
  */
 
 const rules = {
-    required: /Missing value for required attribute \`(.+?)\`/ig,
-    required: /\"(.+?)\" is required, but it was not defined./ig,
+    required: [/Missing value for required attribute \`(.+?)\`/ig, /\"(.+?)\" is required, but it was not defined./ig],
     isBoolean: /Value \((.+?)\) was not a boolean./ig,
     isNotEmptyString: /Value \((.+?)\) was an empty string./ig,
     isInteger: /Value \((.+?)\) was not an integer./ig,
@@ -33,10 +32,14 @@ const rules = {
 };
 
 module.exports = (exceptionMessage) => {
-
     let ruleName;
     _.forEach(rules, (value, key) => {
         ruleName = key;
+        if(_.isArray(value)) {
+            return !_.forEach(value,(v) => {
+                return !new RegExp(v).test(exceptionMessage);
+            });
+        }
         return !new RegExp(value).test(exceptionMessage);
     });
 

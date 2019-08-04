@@ -5,6 +5,7 @@
  * @date 2019/1/5
  */
 const violate = require('./lib/violate');
+const path = require('path');
 module.exports = sails => {
 
     return {
@@ -16,6 +17,22 @@ module.exports = sails => {
                 violate();
                 return cb();
 
+            });
+        },
+
+        loadModules: function (cb) {
+            let responsePath = path.resolve(__dirname, './api/responses');
+            sails.modules.loadResponses(function loadedRuntimeErrorModules(err, responseDefs) {
+                if (err) {
+                    return cb(err);
+                }
+
+                // Mix in the built-in default definitions for custom responses.
+                _.defaults(responseDefs, sails.hooks.responses.middleware,{
+                    badRequest: require(path.resolve(responsePath, 'badRequest'))
+                });
+                sails.hooks.responses.middleware = responseDefs;
+                return cb();
             });
         },
 
@@ -33,7 +50,6 @@ module.exports = sails => {
                             }
                         });
                     }
-                    res.badRequest = require('./api/responses/badRequest')(req, res);
                     return next();
                 }
             }
