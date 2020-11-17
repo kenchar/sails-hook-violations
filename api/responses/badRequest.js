@@ -19,7 +19,7 @@ module.exports = function (optionalData) {
         && optionalData.code === 'E_MISSING_OR_INVALID_PARAMS'
         && _.isArray(optionalData.problems)) {
       _.each(optionalData.problems, (problem) => {
-        message = actionProblem(req.path, problem) || message;
+        message = actionProblem(req, problem) || message;
       });
       return res.serverError(new ViolateError(message));
     }

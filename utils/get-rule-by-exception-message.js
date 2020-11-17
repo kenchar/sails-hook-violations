@@ -11,7 +11,7 @@ const rules = {
     isBoolean: /Value \((.+?)\) was not a boolean./ig,
     isNotEmptyString: /Value \((.+?)\) was an empty string./ig,
     isInteger: /Value \((.+?)\) was not an integer./ig,
-    isNumber: /Value \((.+?)\) was not a number./ig,
+    isNumber: [/Value \((.+?)\) was not a number./ig, /Expecting a number, but got a string/ig],
     isString: /Value \((.+?)\) was not a string./ig,
     max: /Value \((.+?)\) was greater than the configured maximum \((.+?)\)/ig,
     min: /Value \((.+?)\) was less than the configured minimum \((.+?)\)/ig,
@@ -34,13 +34,11 @@ const rules = {
 module.exports = (exceptionMessage) => {
     let ruleName;
     _.forEach(rules, (value, key) => {
-        ruleName = key;
-        if(_.isArray(value)) {
-            return !_.forEach(value,(v) => {
-                return !new RegExp(v).test(exceptionMessage);
+        if (_.isArray(value)) {
+            _.forEach(value, (v) => {
+                if (new RegExp(v).test(exceptionMessage)) ruleName = key;
             });
-        }
-        return !new RegExp(value).test(exceptionMessage);
+        } else if (new RegExp(value).test(exceptionMessage)) ruleName = key;
     });
 
     return ruleName;
